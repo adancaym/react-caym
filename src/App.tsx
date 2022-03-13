@@ -1,26 +1,31 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import {DashboardLayout} from "./layout/dashboard/DashboardLayout";
+import {PublicLayout} from "./layout/public/PublicLayout";
+import {useSelector} from "react-redux";
+import {StateApp} from "./redux/Types";
+import {Login} from "./layout/public/Login";
+import {Crud} from "./components/Crud";
+import {Menus} from "./api/backend/Menus";
+import {MenuCreate, MenuResponse} from "./api/Types";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    const auth = useSelector(({auth}: StateApp) => auth)
+    const controller = new Menus();
+
+    return (
+        <>
+            {auth && auth.user ?
+                <DashboardLayout>
+                    <Crud<Menus, MenuResponse, MenuCreate> controller={controller} />
+                </DashboardLayout> :
+                <PublicLayout>
+                    <Login/>
+                </PublicLayout>
+            }
+        </>
+    );
 }
 
 export default App;
