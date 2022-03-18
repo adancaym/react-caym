@@ -1,10 +1,10 @@
-import {AxiosRequestConfig} from "axios";
-import {catchReponse, processReponse} from "../core/ApiConsumer";
-import {LoginSend, LoginSuccess, UserFull, UserLogin} from "../Types";
-import {Controller} from "../core/Controller";
-import {FormHelper} from "../core/Forms";
+import { AxiosRequestConfig } from "axios";
 import * as Yup from 'yup';
 
+import { catchReponse, processReponse } from "../core/ApiConsumer";
+import { Controller } from "../core/Controller";
+import { FormHelper } from "../core/Forms";
+import { LoginSend, LoginSuccess, UserFull, UserLogin } from "../Types";
 
 export class Auth extends Controller<UserLogin, UserFull> {
 
@@ -17,6 +17,7 @@ export class Auth extends Controller<UserLogin, UserFull> {
 
         this.loginForm = new FormHelper<UserLogin>({
             initialValues: {
+                id: '',
                 email: '',
                 password: ''
             },
@@ -31,7 +32,7 @@ export class Auth extends Controller<UserLogin, UserFull> {
     login(user: string, pass: string) {
         const credentials = btoa(user + ':' + pass);
         const basicAuth = 'Basic ' + credentials;
-        const config = {headers: {"Authorization": basicAuth}};
+        const config = { headers: { "Authorization": basicAuth } };
         const data: LoginSend = {
             access_token: this.getAccessToken()
         }

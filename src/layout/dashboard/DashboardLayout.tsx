@@ -1,73 +1,91 @@
-import styled from "styled-components";
-import {SideBar} from "./SideBar";
+import {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
+import {Navigate, Outlet} from 'react-router-dom';
+import styled from "styled-components";
+
 import {StateApp} from "../../redux/Types";
+import {SideBar} from "./SideBar";
 
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: min-content auto;
-  transition: all 1s ease;
+  grid-template: "sidebar content-render";
+  transition: all 0.5s ease;
   gap: 1em;
-`
+  overflow: auto;
+`;
 const Content = styled.div`
   display: grid;
-  grid-template-rows: 10vh auto 15vh;
+  grid-area: content-render;
   padding: 1em;
-  gap: 2em;
-`
+  grid-template:
+    "nav-content" min-content
+    "container-content" min-content
+    "console" min-content /
+    1fr;
+  transition: all 0.5s ease;
+
+`;
 const Nav = styled.div`
-  background: #181818;
-  box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
-  border-radius: 16px;
-`
+  grid-area: nav-content;
+`;
 const Container = styled.div`
-  background: #181818;
-  box-shadow: 10px 10px 5px 0 rgba(0, 0, 0, 0.75);
-  border-radius: 16px;
-  padding: 3em;
-`
+  grid-area: container-content;
+`;
 const ConsoleStyle = styled.div`
+  grid-area: console;
   background-color: black;
-  box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
-  border-radius: 16px;
-  max-height: 15vh;
   overflow-y: scroll;
-  padding: 2em;
+  padding: 0 3em;
   color: chartreuse;
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-  &::-webkit-scrollbar{
+  max-height: 200px;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  &::-webkit-scrollbar {
     display: none;
   }
-`
-
-interface MainProps {
-    children: JSX.Element
-}
-
+`;
 
 export const Console = () => {
-    const logs = useSelector(({ui}: StateApp) => ui?.logs);
+    const [logs, setLogs] = useState<Array<string>>([]);
+
+    const ui = useSelector(({ui}: StateApp) => ui);
+
+    useEffect(()=> {
+        if (ui && ui.logs) setLogs(ui.logs)
+    },[])
+
     const token = useSelector(({auth}: StateApp) => auth?.token);
-    if (!logs) return <ConsoleStyle/>
-    return <ConsoleStyle>
-        <p>{token}</p>
-        {logs.slice().reverse().map((log, index) => <p key={index}>{log}</p>)}
-    </ConsoleStyle>
-}
-export const DashboardLayout = ({children}: MainProps) => {
+    if (!logs) return <ConsoleStyle/>;
+    return (
+        <ConsoleStyle>
+            <p>{token}</p>
+            <br/>
+            {logs
+                .slice()
+                .reverse()
+                .map((log, index) => (
+                    <p key={index}>-- {log}</p>
+                ))}
+        </ConsoleStyle>
+    );
+};
+export const DashboardLayout = () => {
+
+    const auth = useSelector((state: StateApp) => state.auth)
+    if (!auth || (auth && !auth.token)) return <Navigate to={'/'}/>
 
     return (
         <Grid>
             <SideBar/>
             <Content>
-                <Nav/>
+                <Nav>
+                    <h1>Holi</h1>
+                </Nav>
                 <Container>
-                    {children}
+                    <Outlet/>
                 </Container>
                 <Console/>
             </Content>
         </Grid>
     );
-
-}
+};

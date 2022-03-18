@@ -1,4 +1,5 @@
-import axios, {AxiosRequestConfig, AxiosResponse} from 'axios';
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+
 /**
  * R => hace referencia al tipo esperado en el retorno {"R"eturn} "Entidad que responde el servicio"
  * S => hace referencia al tipo esperado en el envio {"S"end}"Entidad que espera el servidor"

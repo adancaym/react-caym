@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Outlet } from 'react-router-dom';
 
 const Grid = styled.div`
   display: grid;
@@ -10,17 +11,14 @@ const Nav = styled.div`
   height: 5vh;
 `
 
-interface MainProps {
-    children: JSX.Element
-}
 
 
-export const PublicLayout = ({children}: MainProps) => {
-    return (
-        <Grid>
-            <Nav/>
-            {children}
-        </Grid>
-    );
+export const PublicLayout = () => {
+  return (
+    <Grid>
+      <Nav />
+      <Outlet />
+    </Grid >
+  );
 
 }

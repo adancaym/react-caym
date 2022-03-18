@@ -2,82 +2,42 @@ import styled from "styled-components";
 import {Auth} from "../../api/backend/Auth";
 import {useFormik} from "formik";
 import {Users} from "../../api/backend/Users";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from 'react-redux';
 import {LoginSuccess} from "../../api/Types";
 import {login} from "../../redux/reducers/auth/actionsAuth";
+import {Input} from "../../components/common/Input";
+import {ButtonPrimary} from "../../components/common/Button";
+import {Navigate} from "react-router-dom";
+import {StateApp} from "../../redux/Types";
+
 
 const BG = styled.div`
-  height: 100vh;
-  width: 100%;
-  background: ##1E2533;
-`
-const Box = styled.div`
-  position: relative;
-  top: 25%;
-  left: 25%;
-  height: 50vh;
-  width: 50%;
-  background: #181818;
-  box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
-  border-radius: 16px;
   display: grid;
-  grid-template-rows: 50px auto;
-  justify-items: center;
+  grid-template: ". login register .";
+  gap: 2em;
+  align-content: center;
+  align-items: center;
+  min-height: 100vh;
 `
-const Form = styled.form`
+
+const FormRegisterStyle = styled.form`
+  grid-area: register;
   display: grid;
   gap: 10px;
-  width: 100%;
-  align-content: center;
-  justify-items: center;
-  padding: 2em 0;
-
-  input[type="email"], input[type="password"], input[type="text"] {
-    padding: 1em;
-    font-size: 19px;
-    width: 50%;
-    background-color: #181818 !important;
-    color: white;
-    border: none;
-    border-bottom: 1px solid #DDD;
-  }
+`
+const FormLoginStyle = styled.form`
+  grid-area: login;
+  display: grid;
+  gap: 10px;
 `
 export const Login = () => {
-    return <BG>
-        <Box>
-            <Navigation/>
-            <NavigationStyle>
-                <NavigationStyleItem><FormLogin/></NavigationStyleItem>
-                <NavigationStyleItem><FormRegister/></NavigationStyleItem>
-            </NavigationStyle>
-        </Box>
-    </BG>
-}
-const NavigationStyle = styled.ul`
-  display: grid;
-  width: 100%;
-  grid-template-columns: auto auto;
-  text-align: center;
-  align-items: center;
-  justify-items: center;
-`
-
-const NavigationStyleItem = styled.li`
-  list-style: none;
-  color: white;
-  width: 50%;
-  border-bottom: 1px solid black;
-  margin: 3em 0;
-  box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
-
-`
-
-const Navigation = () => {
+    const auth = useSelector((state: StateApp) => state.auth)
+    if (auth && auth.token) return <Navigate to={'/admin'}/>
     return (
-        <NavigationStyle>
-            <NavigationStyleItem>Login</NavigationStyleItem>
-            <NavigationStyleItem>Signup</NavigationStyleItem>
-        </NavigationStyle>
+        <BG>
+            <FormLogin/>
+            <FormRegister/>
+        </BG>
     )
 }
 const FormLogin = () => {
@@ -85,29 +45,32 @@ const FormLogin = () => {
     const dispatch = useDispatch();
     const onLogin = ({user, token}: LoginSuccess) => {
         dispatch(login(user, token))
-    }
 
+    }
     const auth = new Auth(onLogin);
 
     const {handleChange, handleSubmit, errors, isValid} = useFormik(auth.loginForm);
-    return <Form onSubmit={handleSubmit}>
-        <input onChange={handleChange} name={'email'} type="email" placeholder={'usuario'}/>
-        <input onChange={handleChange} name={'password'} type="password" placeholder={'contraseña'}/>
-        <p>{errors.password}</p>
-        <p>{errors.email}</p>
-        <button disabled={!isValid} type={'submit'}>Submit</button>
-    </Form>
+    return (
+        <FormLoginStyle onSubmit={handleSubmit}>
+            <Input onChange={handleChange} name={'email'} type="email" placeholder={'usuario'}/>
+            <Input onChange={handleChange} name={'password'} type="password" placeholder={'contraseña'}/>
+            {errors && <p>{errors.password}</p>}
+            {errors && <p>{errors.email}</p>}
+            <ButtonPrimary disabled={!isValid} type={'submit'}>Ingresar <i
+                className='bx bxs-right-arrow'/></ButtonPrimary>
+        </FormLoginStyle>
+    )
 }
 const FormRegister = () => {
-    const users = new Users();
-    const {handleChange, handleSubmit, errors, isValid} = useFormik(users.signUpForm);
-    return <Form onSubmit={handleSubmit}>
-        <input onChange={handleChange} name={'name'} type="text" placeholder={'Nombre'}/>
-        <input onChange={handleChange} name={'email'} type="email" placeholder={'usuario'}/>
-        <input onChange={handleChange} name={'password'} type="password" placeholder={'contraseña'}/>
-        <p>{errors.password}</p>
-        <p>{errors.email}</p>
-        <p>{JSON.stringify(isValid)}</p>
-        <button disabled={!isValid} type={'submit'}>Submit</button>
-    </Form>
+    const users = new Users(() => `Bearer ${process.env.REACT_APP_MASTER_KEY}`);
+    const {handleChange, handleSubmit, errors, isValid} = useFormik(users.forms);
+    return <FormRegisterStyle onSubmit={handleSubmit}>
+        <Input onChange={handleChange} name={'name'} type="text" placeholder={'Nombre'}/>
+        <Input onChange={handleChange} name={'email'} type="email" placeholder={'usuario'}/>
+        <Input onChange={handleChange} name={'password'} type="password" placeholder={'contraseña'}/>
+        {errors && <p>{errors.password}</p>}
+        {errors && <p>{errors.email}</p>}
+        <ButtonPrimary disabled={!isValid} type={'submit'}>Registrarse <i
+            className='bx bxs-right-arrow'/></ButtonPrimary>
+    </FormRegisterStyle>
 }

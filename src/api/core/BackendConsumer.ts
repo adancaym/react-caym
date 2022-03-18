@@ -1,5 +1,6 @@
-import {ApiConsumer, ResponseFormat} from "./ApiConsumer";
-import {Endpoint} from "./Endpoint";
+import { ApiConsumer, ResponseFormat } from "./ApiConsumer";
+import { Endpoint } from "./Endpoint";
+import { OptionsFieldEntityHtmlHelper } from './EntityHtmlHelper';
 
 export class BackendConsumer extends ApiConsumer {
     getAccessToken: () => string;
@@ -31,7 +32,7 @@ export class BackendConsumer extends ApiConsumer {
                 object,
                 undefined,
                 {
-                    headers: {'Authorization': this.getAccessToken()}
+                    headers: { 'Authorization': this.getAccessToken() }
                 }
             );
     }
@@ -42,7 +43,7 @@ export class BackendConsumer extends ApiConsumer {
                 id,
                 undefined,
                 {
-                    headers: {'Authorization': this.getAccessToken()}
+                    headers: { 'Authorization': this.getAccessToken() }
                 }
             );
     }
@@ -52,7 +53,7 @@ export class BackendConsumer extends ApiConsumer {
             .list<R>(
                 this.useQueryParams ? this.pagination.getParams() : undefined,
                 {
-                    headers: {'Authorization': this.getAccessToken()}
+                    headers: { 'Authorization': this.getAccessToken() }
                 }
             );
     }
@@ -63,9 +64,24 @@ export class BackendConsumer extends ApiConsumer {
                 id,
                 undefined,
                 {
-                    headers: {'Authorization': this.getAccessToken()}
+                    headers: { 'Authorization': this.getAccessToken() }
                 }
             );
+    }
+    options<R extends { name: string, id: string }>(): Promise<Array<OptionsFieldEntityHtmlHelper>> {
+        this.pagination.page = 1;
+        this.pagination.limit = 1;
+        return this.list<R>().then(r => {
+            this.pagination.limit = r.count
+            return this.list<R>()
+                .then(r => r.rows.map((e: R) => {
+                    const option: OptionsFieldEntityHtmlHelper = {
+                        name: e.name,
+                        value: e.id
+                    }
+                    return option
+                }));
+        })
     }
 }
 

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="f34f9bba-1f35-420f-9b9f-41e192ef39c9" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/api/backend/Groups.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/api/backend/Users.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/api/core/FieldReducers.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/common/Button.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/common/Input.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/common/Select.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/common/Shadow.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/common/TextArea.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/dashboard/Cruds.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/dashboard/DashboardRoutes.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/public/PublicRoutes.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jsLinters/eslint.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/react-redux-front.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/react-redux-front.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/Types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/Types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/backend/Auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/backend/Auth.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/backend/Menus.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/backend/Users.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/core/ApiConsumer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/core/ApiConsumer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/core/BackendConsumer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/core/BackendConsumer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/core/Controller.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/core/EntityHtmlHelper.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/core/Forms.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/core/HttpClient.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/core/HttpClient.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/core/Logger.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/core/Logger.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/core/PaginationHandler.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/core/PaginationHandler.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Crud.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Crud.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Table.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Table.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/layout/dashboard/DashboardLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/layout/dashboard/DashboardLayout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/layout/dashboard/SideBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/layout/dashboard/SideBar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/layout/public/Login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/layout/public/Login.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/layout/public/PublicLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/layout/public/PublicLayout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/Types.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/Types.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/reducers/auth/Types.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/reducers/auth/Types.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/reducers/auth/actionsAuth.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/reducers/auth/actionsAuth.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/reducers/auth/reducerAuth.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/reducers/auth/reducerAuth.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/reducers/ui/Types.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/reducers/ui/Types.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/reducers/ui/actionsUi.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/reducers/ui/actionsUi.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/reducers/ui/reducerUi.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/reducers/ui/reducerUi.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/store.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/store.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="26U7lVb3OddT6MnDl31urWGWhTG" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="ts.external.directory.path" value="C:\Users\AdanC\Documents\personal\react-redux-front\node_modules\typescript\lib" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\AdanC\Documents\personal\react-redux-front\src\api\backend" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="start" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.start" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f34f9bba-1f35-420f-9b9f-41e192ef39c9" name="Changes" comment="" />
+      <created>1647466461985</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1647466461985</updated>
+      <workItem from="1647466463696" duration="21295000" />
+      <workItem from="1647558802310" duration="3690000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

@@ -1,10 +1,11 @@
-import {HttpClient} from "./HttpClient";
-import {AxiosError, AxiosRequestConfig, AxiosResponse} from "axios";
-import {Logger} from "./Logger";
+import { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
+
+import { Endpoint, IOptions } from "./Endpoint";
+import { HttpClient } from "./HttpClient";
+import { Logger } from "./Logger";
+import { PaginationHandler } from "./PaginationHandler";
+import { SessionManager } from "./SessionManager";
 import statusCode from './StatusCodes.json';
-import {Endpoint, IOptions} from "./Endpoint";
-import {PaginationHandler} from "./PaginationHandler";
-import {SessionManager} from "./SessionManager";
 
 interface IApiConsumer {
 }
@@ -13,14 +14,14 @@ export interface ResponseFormat<R> {
     rows: Array<R>,
     count: number;
 }
-export const processReponse = <R>({status, data, headers, config}: AxiosResponse<R>) => {
+export const processReponse = <R>({ status, data, headers, config }: AxiosResponse<R>) => {
     const msg = statusCode.find(sc => sc.code === status)?.msg || '';
-    const {url, data: configData, method} = config;
+    const { url, data: configData, method } = config;
     Logger(`Method: ${method}, url: ${url}, ${JSON.stringify(configData)} ${msg}`)
     return data;
 }
-export const catchReponse = ({message, config}: AxiosError) => {
-    const {url, data: configData, method} = config;
+export const catchReponse = ({ message, config }: AxiosError) => {
+    const { url, data: configData, method } = config;
     Logger(`Method: ${method}, url ${url} ${message} ${JSON.stringify(configData)}`)
     throw Error('Handled')
 }

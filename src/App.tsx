@@ -1,31 +1,9 @@
-import React from 'react';
-import './App.css';
-import {DashboardLayout} from "./layout/dashboard/DashboardLayout";
-import {PublicLayout} from "./layout/public/PublicLayout";
-import {useSelector} from "react-redux";
-import {StateApp} from "./redux/Types";
-import {Login} from "./layout/public/Login";
-import {Crud} from "./components/Crud";
-import {Menus} from "./api/backend/Menus";
-import {MenuCreate, MenuResponse} from "./api/Types";
+import {useRoutes} from "react-router-dom";
+
+import {routes} from "./routes";
 
 function App() {
-
-    const auth = useSelector(({auth}: StateApp) => auth)
-    const controller = new Menus();
-
-    return (
-        <>
-            {auth && auth.user ?
-                <DashboardLayout>
-                    <Crud<Menus, MenuResponse, MenuCreate> controller={controller} />
-                </DashboardLayout> :
-                <PublicLayout>
-                    <Login/>
-                </PublicLayout>
-            }
-        </>
-    );
+    return useRoutes(routes)
 }
 
 export default App;
