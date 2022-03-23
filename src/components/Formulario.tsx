@@ -1,8 +1,14 @@
-import { useFormik } from "formik";
-import { useEffect, useState } from "react";
+import {useFormik} from "formik";
+import {useEffect, useState} from "react";
 import styled from "styled-components";
 
-import { EntityHtmlHelper, OptionsFieldEntityHtmlHelper, TypeFieldSelect, TypeFieldarraySelect } from '../api/core/EntityHtmlHelper';
+import {
+    EntityHtmlHelper,
+    OptionsFieldEntityHtmlHelper,
+    TypeFieldSelect,
+    TypeFieldarraySelect,
+    TypeFieldIcon
+} from '../api/core/EntityHtmlHelper';
 
 interface AutoFormProps<R, E> {
     initialValues: E;
@@ -13,16 +19,18 @@ interface AutoFormProps<R, E> {
 }
 
 const FormStyle = styled.form`
-    width: 90%;
+  width: 90%;
 `;
-export const AutoForm = <R, E>({
-    table,
-    initialValues,
-    onSubmit,
-    validationSchema,
-    callBackSubmit,
-}: AutoFormProps<R, E>) => {
-    const { getFieldProps, getFieldMeta, isValid, handleSubmit, setFieldValue } =
+export const AutoForm = <R, E>(
+    {
+        table,
+        initialValues,
+        onSubmit,
+        validationSchema,
+        callBackSubmit
+    }: AutoFormProps<R, E>) => {
+
+    const {getFieldProps, getFieldMeta, isValid, handleSubmit, setFieldValue} =
         useFormik({
             initialValues,
             onSubmit: (values: E) => {
@@ -32,82 +40,81 @@ export const AutoForm = <R, E>({
             validationSchema,
         });
 
-    return (
-        <FormStyle onSubmit={handleSubmit}>
-            {table.fields.map((e) => {
-                switch (e.type) {
-                    case "select": {
-                        return (
-                            <Select<TypeFieldSelect<R>, R>
-                                {...getFieldProps(e.key)}
-                                key={e.key}
-                                field={e}
-                            />
-                        );
-                    }
-                    case "arraySelect": {
-
-                        const handleChange = (event: any) => {
-                            const { checked, value } = event.target;
-                            if (checked) {
-                                setFieldValue(e.key, [...getFieldMeta(e.key).value, value]);
-                            } else {
-                                setFieldValue(
-                                    "tags",
-                                    getFieldMeta(e.key).value.filter((v: any) => v !== value)
-                                );
-                            }
-                        };
-
-                        return (
-                            <ArraySelect<TypeFieldarraySelect<R>, R>
-                                {...getFieldProps(e.key)}
-                                key={e.key}
-                                field={e}
-                                handleChange={handleChange}
-                                selected={getFieldMeta(e.key).value}
-                            />
-                        );
-                    }
-                    case "id": {
-                        return <></>
-                    }
-                    case "dateReadOnly": {
-                        return <></>
-                    }
-                    case "readOnlyInTable": {
-                        return <></>
-                    }
-                    default: {
-                        const { error } = getFieldMeta(e.key)
-                        return (
-                            <InputContainer>
-                                <Label htmlFor={e.key}>{e.label}</Label>
-                                <Input {...getFieldProps(e.key)} />
-                                <Error>{error}</Error>
-                            </InputContainer>
-                        );
-                    }
+    return <FormStyle onSubmit={handleSubmit}>
+        {table.fields.map((e) => {
+            switch (e.type) {
+                case "select": {
+                    return (
+                        <Select<TypeFieldSelect<R>, R>
+                            {...getFieldProps(e.key)}
+                            key={e.key}
+                            field={e}
+                        />
+                    );
                 }
-            })}
-            <button disabled={!isValid} type="submit">Guardar</button>
-        </FormStyle>
-    );
+                case "arraySelect": {
+
+                    const handleChange = (event: any) => {
+                        const {checked, value} = event.target;
+                        if (checked) {
+                            setFieldValue(e.key, [...getFieldMeta(e.key).value, value]);
+                        } else {
+                            setFieldValue(
+                                "tags",
+                                getFieldMeta(e.key).value.filter((v: any) => v !== value)
+                            );
+                        }
+                    };
+
+                    return (
+                        <ArraySelect<TypeFieldarraySelect<R>, R>
+                            {...getFieldProps(e.key)}
+                            key={e.key}
+                            field={e}
+                            handleChange={handleChange}
+                            selected={getFieldMeta(e.key).value}
+                        />
+                    );
+                }
+                case "id": {
+                    return <></>
+                }
+                case "dateReadOnly": {
+                    return <></>
+                }
+                case "readOnlyInTable": {
+                    return <></>
+                }
+                case "icon": {
+                    return <SelectIcon<TypeFieldIcon<R>, R>
+                        {...getFieldProps(e.key)}
+                        key={e.key}
+                        field={e}
+                    />
+                }
+                default: {
+                    const {error} = getFieldMeta(e.key)
+                    return (
+                        <InputContainer>
+                            <Label htmlFor={e.key}>{e.label}</Label>
+                            <Input {...getFieldProps(e.key)} />
+                            <Error>{error}</Error>
+                        </InputContainer>
+                    );
+                }
+            }
+        })}
+        <button disabled={!isValid} type="submit">Guardar</button>
+    </FormStyle>
 };
 
 interface SelectProps<F> {
     field: F;
 }
 
-const Select = <F extends TypeFieldSelect<R>, R>({
-    field,
-    ...rest
-}: SelectProps<F>) => {
-    const [options, setOptions] = useState<Array<OptionsFieldEntityHtmlHelper>>(
-        []
-    );
+const Select = <F extends TypeFieldSelect<R>, R>({field, ...rest}: SelectProps<F>) => {
+    const [options, setOptions] = useState<Array<OptionsFieldEntityHtmlHelper>>([]);
     const [loading, setLoading] = useState(false);
-
     useEffect(() => {
         setLoading(true);
         if (field.type === 'select' && field.options) field.options().then(setOptions).finally(() => setLoading(false));
@@ -117,7 +124,7 @@ const Select = <F extends TypeFieldSelect<R>, R>({
         <SelectContainer>
             <label htmlFor={field.key}>{field.label}</label>
             {loading ? (
-                <Loading />
+                <Loading/>
             ) : (
                 <select {...rest} name={field.key} id={field.key}>
                     {options.map((option) => (
@@ -128,7 +135,31 @@ const Select = <F extends TypeFieldSelect<R>, R>({
         </SelectContainer>
     );
 };
+const SelectIcon = <F extends TypeFieldIcon<R>, R>({field, ...rest}: SelectProps<F>) => {
+    const [options, setOptions] = useState<Array<string>>([]);
+    const [loading, setLoading] = useState(false);
+    // @ts-ignore
+    const {value} = rest;
+    useEffect(() => {
+        setLoading(true);
+        if (field.type === 'icon' && field.options) field.options().then(setOptions).finally(() => setLoading(false));
+    }, [field]);
 
+    return (
+        <SelectContainer>
+            <label htmlFor={field.key}>{field.label} <i className={value}/></label>
+            {loading ? (
+                <Loading/>
+            ) : (
+                <select name={field.key} id={field.key} value={value}>
+                    {options.map((option) => (
+                        <option value={option}>{option.replace('bx ', '')}</option>
+                    ))}
+                </select>
+            )}
+        </SelectContainer>
+    );
+};
 
 
 interface ArraySelectProps<F> {
@@ -137,94 +168,78 @@ interface ArraySelectProps<F> {
     selected?: Array<string>;
 }
 
-const ArraySelect = <F extends TypeFieldarraySelect<R>, R>({
-    field,
-    handleChange,
-    selected = [],
-    ...rest
-}: ArraySelectProps<F>) => {
-    const [options, setOptions] = useState<Array<OptionsFieldEntityHtmlHelper>>(
-        []
-    );
-    const [loading, setLoading] = useState(false);
+const ArraySelect = <F extends TypeFieldarraySelect<R>, R>(
+    {
+        field,
+        handleChange,
+        selected = []
+    }: ArraySelectProps<F>) => {
 
+    const [options, setOptions] = useState<Array<OptionsFieldEntityHtmlHelper>>([]);
+    const [loading, setLoading] = useState(false);
     useEffect(() => {
         setLoading(true);
         if (field.options) field.options().then(setOptions).finally(() => setLoading(false));
     }, [field]);
 
-    return (
-        <ArraySelectContainer>
-            <label htmlFor={field.key}>{field.label}</label>
-            {loading ? (
-                <Loading />
-            ) : (
-                <CheckboxContainer>
-                    {options.map((option) => (
-                        <CheckboxContainerRow>
-                            <input onChange={handleChange} type={'checkbox'} checked={!!selected.find(e => e === option.value)} value={option.value} />
-                            <label htmlFor={option.value}>{option.name}</label>
-                        </CheckboxContainerRow>
-                    ))}
-                </CheckboxContainer>
-            )}
-        </ArraySelectContainer>
-    );
+    return <ArraySelectContainer>
+        <label htmlFor={field.key}>{field.label}</label>
+        {loading ? (
+            <Loading/>
+        ) : (
+            <CheckboxContainer>
+                {options.map((option) => (
+                    <CheckboxContainerRow>
+                        <label htmlFor={option.value}>
+                            <input onChange={handleChange} type={'checkbox'}
+                                   checked={!!selected.find(e => e === option.value)}
+                                   value={option.value}/> {option.name}
+                        </label>
+                    </CheckboxContainerRow>
+                ))}
+            </CheckboxContainer>
+        )}
+    </ArraySelectContainer>
 };
 
 
 const CheckboxContainer = styled.div`
-    grid-area: container;
-    display: grid;
-    gap: 1em;
-
-    grid-template-columns: repeat(4, 1fr);
-    label {
-        text-align: left;
-        justify-self: start;
-    }
-    max-height: 200px;
-    overflow: auto;
-`
-const CheckboxContainerRow = styled.div`
-    display: grid;
-    grid-template:"input label";
-    border: 1px solid var(--main-text-color);
-`
-
-const InputContainer = styled.div`
-  width: 100%;
+  grid-area: container;
   display: grid;
   gap: 1em;
-  grid-template: 
-  "label input" 1fr 
-  "error error" 1fr /
-  200px 1fr;
-`;
-const Label = styled.label`
-    grid-area: label
+  max-height: 200px;
+  overflow: auto;
+  grid-auto-flow: column;
+
+  label {
+    text-align: left;
+    justify-self: start;
+  }
 `
-const Input = styled.input`
-    grid-area: input
-`
-const Error = styled.p`
-    grid-area: error;
-    color: red;
-    text-align: center
-`
-const SelectContainer = styled.div`
-  width: 100%;
+const CheckboxContainerRow = styled.div`
   display: grid;
-  grid-template: "label select" 1fr /100px 1fr;
-`;
+  grid-auto-flow: column;
+  width: 98%;
+
+  input {
+    margin-top: 4px;
+  }
+`
+
+
 const ArraySelectContainer = styled.div`
   width: 100%;
   display: grid;
-  grid-template: "label container" 1fr /100px 1fr;;
+  grid-template: "label container" 1fr /150px 1fr;
+  justify-items: start;
 `;
+
+
+///__________________________________________________________________________________________________________________
 const Loading = styled.div`
   justify-self: end;
   display: inline-block;
+
   &:after {
     content: " ";
     display: block;
@@ -236,6 +251,7 @@ const Loading = styled.div`
     border-color: #fff transparent #fff transparent;
     animation: lds-dual-ring 1.2s linear infinite;
   }
+
   @keyframes lds-dual-ring {
     0% {
       transform: rotate(0deg);
@@ -245,3 +261,37 @@ const Loading = styled.div`
     }
   }
 `;
+
+const SelectContainer = styled.div`
+  width: 100%;
+  display: grid;
+  grid-template-columns:  150px 1fr;
+  justify-items: start;
+
+  & > select {
+    width: 98%;
+    justify-self: end;
+  }
+`;
+const InputContainer = styled.div`
+  width: 100%;
+  display: grid;
+  gap: 1em;
+  grid-template:
+          "label input" auto 
+          "error error" auto /
+           150px 1fr;
+  justify-items: start;
+`;
+const Label = styled.label`
+  grid-area: label;
+`
+const Input = styled.input`
+  grid-area: input;
+  width: 100%;
+`
+const Error = styled.p`
+  grid-area: error;
+  color: red;
+  text-align: center
+`

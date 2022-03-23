@@ -6,14 +6,23 @@ import {FormHelper} from "../core/Forms";
 import {GroupCreate, GroupResponse} from "../Types";
 import {ArrayObjectReducer, DateReducer} from "../core/FieldReducers";
 import {Menus} from "./Menus";
+import icons from '../Helpers/Icons.json'
 
 const menus = new Menus();
+
 export class Groups extends Controller<GroupResponse, GroupCreate> {
     constructor() {
         super('groups');
         this.table = new EntityHtmlHelper<GroupResponse>([
             {type: 'id', key: 'id', label: 'id'},
             {type: 'text', key: 'name', label: 'Nombre'},
+            {
+                type: 'icon',
+                key: 'icon',
+                label: 'Icon',
+                reducer: (o) => <i className={o.icon}/>,
+                options: () => new Promise(resolve => resolve(icons))
+            },
             {
                 type: 'arraySelect',
                 key: 'menus',
@@ -25,13 +34,13 @@ export class Groups extends Controller<GroupResponse, GroupCreate> {
                 type: 'dateReadOnly',
                 key: 'createdAt',
                 label: 'Fecha de creación',
-                reducer: (e) => <DateReducer date={new Date(e.createdAt)} />
+                reducer: (e) => <DateReducer date={new Date(e.createdAt)}/>
             },
             {
                 type: 'dateReadOnly',
                 key: 'updatedAt',
                 label: 'Fecha de actualización',
-                reducer: (e) => <DateReducer date={new Date(e.updatedAt)} />
+                reducer: (e) => <DateReducer date={new Date(e.updatedAt)}/>
             },
         ]);
         this.forms = new FormHelper<GroupCreate>({

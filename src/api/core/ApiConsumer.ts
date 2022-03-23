@@ -5,7 +5,7 @@ import { HttpClient } from "./HttpClient";
 import { Logger } from "./Logger";
 import { PaginationHandler } from "./PaginationHandler";
 import { SessionManager } from "./SessionManager";
-import statusCode from './StatusCodes.json';
+import statusCode from '../Helpers/StatusCodes.json';
 
 interface IApiConsumer {
 }

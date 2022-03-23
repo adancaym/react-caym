@@ -12,10 +12,12 @@ const GridTable = styled.div`
   grid-area: component-table;
   display: grid;
   gap: 1em;
+  border-radius: 16px;
+  padding: 0 1em;
   grid-template:
     "filter" 50px
-    "tabla" auto
-    "pagination" min-content /
+    "tabla" 1fr
+    "pagination" 50px /
     auto;
 `;
 
@@ -28,25 +30,6 @@ const TableStyle = styled.table`
   grid-area: tabla;
   table-layout: fixed;
   border-radius: 16px;
-
-  select {
-    width: 100%;
-    border: none;
-    background: transparent;
-    color: black;
-
-    &:active {
-      outline: none;
-    }
-
-    &:focus {
-      outline: none;
-    }
-
-    option {
-      color: black;
-    }
-  }
 `;
 const PaginationStyle = styled.div`
   grid-area: pagination;
@@ -180,30 +163,33 @@ export const Table = <S extends Controller<R, E>, R extends { id: string }, E>({
         fetchData();
     }, []);
 
-    const searchKeyword = (keyword: string) => {
+    const searchKeyword = async (keyword: string) => {
         if (keyword !== "") {
             controller.pagination.q = keyword;
             controller.pagination.page = 1;
         } else {
             controller.pagination.q = undefined;
         }
-        fetchData();
+        await fetchData();
     };
 
 
     const renderProp = (object: R, field: FieldEntityHtmlHelper<R>) => {
 
-        const mapped = Object.entries(object).map(([key, value]) => ({
-            key,
-            value
-        })).find((object) => object.key === field.key);
-
+        const mapped = Object
+            .entries(object)
+            .map(([key, value]) => ({
+                key,
+                value
+            }))
+            .find((object) => object.key === field.key);
 
         if (
             field.type === 'checkbox' ||
             field.type === 'date' ||
             field.type === 'dateReadOnly' ||
             field.type === 'select' ||
+            field.type === 'icon' ||
             field.type === 'arraySelect'
         ) {
             if (field.reducer) return field.reducer(object);
@@ -212,9 +198,9 @@ export const Table = <S extends Controller<R, E>, R extends { id: string }, E>({
         if (mapped) return mapped.value;
     };
 
-    const page = (value: number) => {
-        controller.pagination.page = controller.pagination.page + value;
-        fetchData();
+    const page = async (value: number) => {
+        controller.pagination.changePage(value)
+        await fetchData();
     };
 
     return (

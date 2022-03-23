@@ -5,6 +5,7 @@ import {EntityHtmlHelper} from '../core/EntityHtmlHelper';
 import {FormHelper} from "../core/Forms";
 import {MenuCreate, MenuResponse} from "../Types";
 import {ArrayObjectReducer, DateReducer} from "../core/FieldReducers";
+import icons from "../Helpers/Icons.json";
 
 export class Menus extends Controller<MenuResponse, MenuCreate> {
     constructor() {
@@ -12,8 +13,14 @@ export class Menus extends Controller<MenuResponse, MenuCreate> {
         this.table = new EntityHtmlHelper<MenuResponse>([
             {type: 'id', key: 'id', label: 'id'},
             {type: 'text', key: 'name', label: 'Nombre'},
-            {type: 'text', key: 'icon', label: 'Icono'},
-            {type: 'text', key: 'path', label: 'path'},
+            {type: 'text', key: 'path', label: 'Ruta'},
+            {
+                type: 'icon',
+                key: 'icon',
+                label: 'Icon',
+                reducer: (o) => <i className={o.icon}/>,
+                options: () => new Promise(resolve => resolve(icons))
+            },
             {
                 type: 'arraySelect',
                 key: 'menus',
@@ -25,13 +32,13 @@ export class Menus extends Controller<MenuResponse, MenuCreate> {
                 type: 'dateReadOnly',
                 key: 'createdAt',
                 label: 'Fecha de creación',
-                reducer: (e) => <DateReducer date={new Date(e.createdAt)} />
+                reducer: (e) => <DateReducer date={new Date(e.createdAt)}/>
             },
             {
                 type: 'dateReadOnly',
                 key: 'updatedAt',
                 label: 'Fecha de actualización',
-                reducer: (e) => <DateReducer date={new Date(e.updatedAt)} />
+                reducer: (e) => <DateReducer date={new Date(e.updatedAt)}/>
             },
         ]);
         this.forms = new FormHelper<MenuCreate>({

@@ -1,4 +1,4 @@
-import { Action, StateAuth, Types } from "../../Types";
+import {Action, StateAuth, Types} from "../../Types";
 
 // los reducers regresan al objeto llamado
 
@@ -9,22 +9,28 @@ import { Action, StateAuth, Types } from "../../Types";
  *
  * */
 export const reducerAuth = (
-  state: StateAuth = { user: undefined, token: undefined },
-  { type, payload }: Action
+    state: StateAuth = {user: undefined, token: undefined},
+    {type, payload}: Action
 ) => {
-  switch (type) {
-    case Types.login: {
-      return {
-        ...state,
-        user: payload.user,
-        token: payload.token,
-      };
+    switch (type) {
+        case Types.login: {
+            return {
+                ...state,
+                user: payload.user,
+                token: payload.token,
+            };
+        }
+        case Types.me: {
+            return {
+                ...state,
+                user: payload.user,
+            };
+        }
+        case Types.logout: {
+            return {};
+        }
+        default: {
+            return state;
+        }
     }
-    case Types.logout: {
-      return {};
-    }
-    default: {
-      return state;
-    }
-  }
 };

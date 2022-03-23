@@ -1,4 +1,4 @@
-import { IOptions } from "./Endpoint";
+import {IOptions} from "./Endpoint";
 
 export class PaginationHandler {
     page: number;
@@ -34,5 +34,9 @@ export class PaginationHandler {
             }
         }
         return result;
+    }
+
+    changePage(value: number): void {
+        this.page = this.page + value;
     }
 }

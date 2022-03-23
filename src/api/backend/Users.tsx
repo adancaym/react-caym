@@ -2,15 +2,16 @@ import * as Yup from "yup";
 
 import {Controller} from "../core/Controller";
 import {FormHelper} from "../core/Forms";
-import {GroupResponse, UserCreate, UserFull} from "../Types";
+import {UserCreate, UserFull} from "../Types";
 import {EntityHtmlHelper} from "../core/EntityHtmlHelper";
 import {Groups} from "./Groups";
-import {ArrayObjectReducer, ArrayObjectReducerProps} from "../core/FieldReducers";
+import {ArrayObjectReducer} from "../core/FieldReducers";
 
 export class Users extends Controller<UserFull, UserCreate> {
     forms: FormHelper<UserCreate>
     table: EntityHtmlHelper<UserFull>
-    constructor( getAccessToken?: ()=> string) {
+
+    constructor(getAccessToken?: () => string) {
         super('users', getAccessToken);
         this.forms = new FormHelper<UserCreate>({
             initialValues: {
@@ -22,7 +23,7 @@ export class Users extends Controller<UserFull, UserCreate> {
             onSubmit: (values) => {
                 if (values.id) {
                     return this.update(values.id, values)
-                }else {
+                } else {
                     return this.create(values)
                 }
             },
@@ -39,10 +40,18 @@ export class Users extends Controller<UserFull, UserCreate> {
                 type: 'arraySelect',
                 key: 'groups',
                 label: 'Grupos',
-                options: ()=> new Groups().options(),
-                reducer: (o) => <ArrayObjectReducer array={o.groups} />
+                options: () => new Groups().options(),
+                reducer: (o) => <ArrayObjectReducer array={o.groups}/>
             }
         ])
+    }
+
+    me(): Promise<UserFull> {
+        return this.http.get<UserFull>(this.endpoint.appendUri('me').toString(), {
+            headers: {
+                'Authorization': this.getAccessToken()
+            }
+        }).then(r => r.data)
     }
 
     convert(object: UserFull): UserCreate {

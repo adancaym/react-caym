@@ -4,30 +4,36 @@ import {Controller} from "../api/core/Controller";
 import {Modal} from "./Modal";
 import {Table} from "./Table";
 import {AutoForm} from "./Formulario";
-import React, {useEffect, useRef, useState} from "react";
+import React, {useRef} from "react";
 
 const Grid = styled.div`
   display: grid;
-  justify-items: center;
-  align-items: start;
   gap: 1em;
+  height: 100%;
   grid-template:
-    "component-table" auto
-    "component-toolbar" 50px;
+    "component-table" 1fr
+    "component-toolbar" 90px /
+     1fr;
 `;
 const Toolbar = styled.div`
   display: grid;
+  gap: 1em;
   grid-area: component-toolbar;
-  justify-content: end;
+  justify-content: start;
+  align-items: center;
+  height: 80px;
   width: 100%;
   border-radius: 16px;
+  border: 1px solid black;
+  grid-auto-flow: column;
 `;
 
 export interface CrudProps<S extends Controller<R, E>, R extends { id: string }, E> {
     controller: S;
+    children?: JSX.Element | JSX.Element[]
 }
 
-export const Crud = <S extends Controller<R, E>, R extends { id: string }, E>({controller}: CrudProps<S, R, E>) => {
+export const Crud = <S extends Controller<R, E>, R extends { id: string }, E>({controller, children}: CrudProps<S, R, E>) => {
     const childRef = useRef<any>();
     const closeModal = () => {
         childRef.current.clickAccept();
@@ -39,7 +45,7 @@ export const Crud = <S extends Controller<R, E>, R extends { id: string }, E>({c
                 <Modal ref={childRef}
                        title={"Crear"}
                        buttonText="Agregar"
-                       buttonTrigger={<i style={{fontSize: '50px'}} className='bx bx-plus-circle'/>}
+                       buttonTrigger={<i style={{fontSize: '50px', marginLeft: '10px'}} className='bx bx-plus-circle'/>}
                        showModalActions={false}
                 >
                     {controller.forms !== undefined ? (
@@ -54,6 +60,7 @@ export const Crud = <S extends Controller<R, E>, R extends { id: string }, E>({c
                         <>No hay un formulario definido</>
                     )}
                 </Modal>
+                <>{children}</>
             </Toolbar>
         </Grid>
     );

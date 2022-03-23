@@ -47,6 +47,7 @@ export interface GroupCreate {
 export interface GroupResponse {
     id: string;
     name: string;
+    icon: string;
     menus: Array<MenuResponse>;
     createdAt: Date;
     updatedAt: Date;
